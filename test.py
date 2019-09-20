@@ -61,7 +61,7 @@ class TestAcceptanceStripe(unittest.TestCase):
         res = re.search(pattern, self.dom_str)
         self.assertTrue(hasattr(res, 'group'), msg="You didn't define a success URL.")
 
-    # Check if cancelUrl redirects to order.html
+    # Check if cancelUrl redirects to order.ht
     def test_acceptance_cancel_url(self):
         pattern = re.compile(r"cancelUrl: \'(http|https)://(.*)/order.html\'",
                              re.I | re.M)
