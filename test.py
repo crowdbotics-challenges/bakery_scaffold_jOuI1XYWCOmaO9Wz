@@ -40,7 +40,7 @@ class TestAcceptanceStripe(unittest.TestCase):
                         msg="You didn't add a checkout button.")
 
     def test_acceptance_sku_item_defined_on_checkout(self):
-        """Check if checkout button was captured12."""
+        """Check if checkout button was captured."""
         pattern = re.compile(r"items: \[\{sku: 'sku_\w{14}', quantity: \d{1}\}\]",
                              re.I | re.M)
         res = re.search(pattern, self.dom_str)
