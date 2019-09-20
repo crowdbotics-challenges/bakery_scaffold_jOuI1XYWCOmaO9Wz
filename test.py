@@ -61,7 +61,7 @@ class TestAcceptanceStripe(unittest.TestCase):
         res = re.search(pattern, self.dom_str)
         self.assertTrue(hasattr(res, 'group'), msg="You didn't define a success URL.")
 
-    # Check if cancelUrl redirects to order.ht
+    # Check if cancelUrl redirects to order.html
     def test_acceptance_cancel_url(self):
         pattern = re.compile(r"cancelUrl: \'(http|https)://(.*)/order.html\'",
                              re.I | re.M)
@@ -71,9 +71,11 @@ class TestAcceptanceStripe(unittest.TestCase):
 
 class AssessmentTestCases(unittest.TestCase):
     def setUp(self):
+
         with open("order.html", "r") as file_descriptor:
             self.dom_str = file_descriptor.read()
 
+        CHROMEDRIVER_PATH = os.getenv('CHROMEDRIVERDIR')
         WINDOW_SIZE = "1920,1080"
 
         options = selenium.webdriver.ChromeOptions()
@@ -83,7 +85,7 @@ class AssessmentTestCases(unittest.TestCase):
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
 
-        self.driver = webdriver.Chrome(ChromeDriverManager(version='72.0.3626.7').install(), options=options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     def _get_button_id(self):
         pattern = re.compile(r"\('checkout-button-sku_'\);", re.I | re.M)
@@ -139,6 +141,17 @@ class AssessmentTestCases(unittest.TestCase):
 
     def tearDown(self):
         self.driver.close()
+
+
+    
+
+class TestSubmission(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super(TestSubmission, self).__init__(*args, **kwargs)
+        with open('order.html', 'r') as file_descriptor:
+            self.dom_str = file_descriptor.read()
+
+    
 
 
 if __name__ == "__main__":
